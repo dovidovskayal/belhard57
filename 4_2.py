@@ -3,7 +3,6 @@
 
 letters_dict ={}
 text: str = input('Введите текст: ')
-text_list: list = list(text)
-n: int = len(text_list)
-letters_dict: dict = {text_list[i]: text_list.count(text_list[i]) for i in range(n)}
+n: int = len(text)
+letters_dict: dict = {text[i]: text.count(text[i]) for i in range(n)}
 print(letters_dict)
