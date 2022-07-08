@@ -8,3 +8,18 @@ for i in some_lst:
         print(i, end=' ')
     else:
         print(i, end='\n')
+
+
+
+c = 0
+for i in range(2, N+1,2):
+    if c<5:
+        print(i, end=' ')
+        c +=1
+    else:
+        c =1
+        print()
+        print(i,end=' ')
+
+
+

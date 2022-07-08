@@ -8,3 +8,8 @@ for i in range(10000):
     if i % M == 0 and i > K and a <= N:
             a += 1
             print(i)
+while N > 0:
+    if K % M == 0:
+        print(K)
+        N -=1
+    K += 1
