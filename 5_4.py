@@ -10,9 +10,9 @@ text: str = input('Введите строку: ')
 #print(text, '-', a)
 i = 0
 c = 0
-while i < len(text) - 2:
-    if text[i] == text[i+1]
+while i < len(text) - 1:
+    if text[i] == text[i+1]:
         c += 1
-        i += 2
+        i += 1
     i += 1
 print(c)
