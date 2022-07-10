@@ -7,7 +7,16 @@ def perevod(n):
         n = n // 2
     lst.reverse()
     str_list = ''.join(map(str, lst))
-    return str_list
+    list_two = [2**i for i in range(len(lst) - 1, 0, -1)]
+    count = 0
+    for i in range(len(lst)-1):
+        a = lst[i]
+        b = list_two[i]
+        c = a * b
+        print(c)
+        count += c
+
+    return str_list, count
 
 
 a = perevod(612)
