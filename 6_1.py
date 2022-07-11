@@ -6,17 +6,17 @@ def perevod(n):
         lst.append(k)
         n = n // 2
     lst.reverse()
-    str_list = ''.join(map(str, lst))
-    list_two = [2**i for i in range(len(lst) - 1, 0, -1)]
+    str_list: str = ''.join(map(str, lst))
+    list_two: list[int] = [2 ** i for i in range(len(lst) - 1, 0, -1)]
     count = 0
-    for i in range(len(lst)-1):
+    for i in range(len(lst) - 1):
         a = lst[i]
         b = list_two[i]
         c = a * b
-        print(c)
         count += c
 
     return str_list, count
+
 
 some_number = int(input('Введите число: '))
 a = perevod(some_number)
