@@ -8,5 +8,5 @@ def foo(lst):
             print('Для элемента', i, ':', lst[i-1], '+', lst[-i+1], '=', lst[i-1]+lst[-i+1])
 
 
-some_list = [12,13,11,22,24]
+some_list: list[int] = [12,13,11,22,24]
 foo(some_list)
