@@ -1,7 +1,7 @@
 # Код Морзе для представления цифр и букв использует тире и точки.
 # Напишите функцию для кодирования текстового сообщения в соответствии с кодом Морзе. (словари в помощь)
-def morze (messege):
-    messege_list = list(messege)
+def morze (message):
+    message_list = list(message)
     dict_lett = {
         'a': '.-',
         'b': '-...',
@@ -39,12 +39,12 @@ def morze (messege):
         '8': '---..',
         '9': '----.'
     }
-    for i in range(len(messege_list)):
-        messege_list[i] = dict_lett.get(messege_list[i],'значения нет')
-    messege = ''.join(messege_list)
+    for i in range(len(message_list)):
+        message_list[i] = dict_lett.get(message_list[i],'значения нет')
+    message = ''.join(message_list)
     return messege
 
-messege = input('Введите сообщение: ')
-new_messege = morze(messege)
+message = input('Введите сообщение: ')
+new_message = morze(message)
 print(new_messege)
 
