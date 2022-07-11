@@ -8,7 +8,7 @@ def filter_foo(some_dict, name):
             return list(some_dict.keys())[list(some_dict.values()).index(country)]
 
 
-countries_dict = {
+countries_dict: dict = {
     'Армения': ['Ереван', 'Аштарак', 'Арарат', 'Армавир', 'Ехегнадзор '],
     'Австралия': ['Балларат', 'Беналла', 'Бендиго',  'Бэрнсдейн', 'Вангаратта'],
     'Австрия': ['Вена', 'Грац', 'Линц', 'Зальцбург', 'Инсбрук'],
@@ -17,5 +17,5 @@ countries_dict = {
 
 }
 
-name = input('Введите название Города: ')
+name: str = input('Введите название Города: ')
 print(filter_foo(countries_dict, name))
