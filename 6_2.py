@@ -28,6 +28,7 @@ def morze (message):
         'x': '-..-',
         'y': '-.--',
         'z': '--..',
+        ' ': '  ',
         '0': '-----',
         '1': '.----',
         '2': '..---',
@@ -45,6 +46,6 @@ def morze (message):
     return message
 
 message = input('Введите сообщение: ')
-new_message = morze(message)
+new_message = morze(message.lower())
 print(new_message)
 

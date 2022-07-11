@@ -18,6 +18,6 @@ def perevod(n):
 
     return str_list, count
 
-
-a = perevod(612)
+some_number = int(input('Введите число: '))
+a = perevod(some_number)
 print(a)
