@@ -42,9 +42,9 @@ def morze (message):
     for i in range(len(message_list)):
         message_list[i] = dict_lett.get(message_list[i],'значения нет')
     message = ''.join(message_list)
-    return messege
+    return message
 
 message = input('Введите сообщение: ')
 new_message = morze(message)
-print(new_messege)
+print(new_message)
 
