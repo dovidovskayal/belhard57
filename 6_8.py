@@ -1,10 +1,11 @@
 # Дан словарь, ключ - Название страны, значение - список городов,
 # на вход поступает город, необходимо сказать из какой он страны
+
+
 def filter_foo(some_dict, name):
-    dict_values = some_dict.items()
-
-    print(dict_values, name)
-
+    for country in some_dict.values():
+        if name.capitalize() in country:
+            return list(some_dict.keys())[list(some_dict.values()).index(country)]
 
 
 countries_dict = {
@@ -17,4 +18,4 @@ countries_dict = {
 }
 
 name = input('Введите название Города: ')
-filter_foo(countries_dict, name)
+print(filter_foo(countries_dict, name))
