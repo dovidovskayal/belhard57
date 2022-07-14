@@ -2,10 +2,10 @@
 # на вход поступает город, необходимо сказать из какой он страны
 
 
-def filter_foo(some_dict, name):
-    for country in some_dict.values():
-        if name.capitalize() in country:
-            return list(some_dict.keys())[list(some_dict.values()).index(country)]
+def filter_foo(some_dict, city):
+    for country, cities in some_dict.items():
+        if city in cities:
+            return country.title()
 
 
 countries_dict: dict = {
@@ -17,5 +17,5 @@ countries_dict: dict = {
 
 }
 
-name: str = input('Введите название Города: ')
-print(filter_foo(countries_dict, name))
+city: str = input('Введите название Города: ')
+print(filter_foo(countries_dict, city))
