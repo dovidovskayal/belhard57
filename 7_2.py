@@ -4,7 +4,7 @@ n: int = int(input('Enter number: '))
 def prime_number(n):
     i = 10
     count = 0
-    for i in range(2,11):
+    for i in range(2,n//2+1):
         if n == i:
             i -= 1
             continue
