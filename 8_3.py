@@ -1,5 +1,5 @@
 # Бинарный поиск
-n = int(input('Введите число'))
+n = int(input('Введите число '))
 numbers = [1,2,3,4,5,6,7,8,9]
 def binary_search(numbers, n):
     first = 0
@@ -11,10 +11,9 @@ def binary_search(numbers, n):
         if n == s:
             return mid
         if n > s:
-            last = mid - 1
-        else:
             first = mid + 1
+        else:
+            last = mid - 1
         i +=1
-        print(i)
-    return None
+    return mid
 print(binary_search(numbers, n))
