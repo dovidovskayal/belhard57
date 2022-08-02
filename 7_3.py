@@ -26,7 +26,7 @@ def line_right(n, m, k, matrix):
         matrix[i][n - 1 - k] = n + i
 
 
-def line_left(n, m, k matrix):
+def line_left(n, m, k, matrix):
     for i in range(m - 2 - k, 0, -1):
         matrix[i][0+k] = n + m + n + m - 3 - i
 

@@ -9,7 +9,7 @@ for i in range(0,len(n)-1,5):
 for i in range(10000, 100000):
     ost = 0
     for j in range(0, len(a)-1):
-        delit = int(a[j]+str(ost))
+        delit = int(str(ost)+ a[j])
         ost = delit%i
         b.append((delit) // i)
 
