@@ -1,8 +1,8 @@
 from typing import Optional, List
 
-from sqlalchemy import select, update, delete, or_, and_
+from sqlalchemy import select, update, delete
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm import Session, session
+from sqlalchemy.orm import Session
 
 from models import create_session, Category, Article
 
@@ -21,18 +21,19 @@ class CRUDCategory:
         else:
             session.refresh(category)
             return category
+
     @staticmethod
     @create_session
     def get(category_id: int, session: Session = None) -> Optional[Category]:
         category = session.execute(
             select(Category)
             .where(Category.id == category_id)
-            #.where(or_(Category.id == category_id, Category.name == 'Food')) для объединения через и/или
+            # .where(or_(Category.id == category_id, Category.name == 'Food')) для объединения через и/или
         )
         category = category.first()
         if category:
             return category[0]
-        #return category[0] if (category := category.first()) else None
+        # return category[0] if (category := category.first()) else None
 
     @staticmethod
     @create_session
@@ -45,11 +46,10 @@ class CRUDCategory:
             )
         else:
             categories = session.execute(
-                    select(Category)
-                    .order_by(Category.id)
-                 )
+                select(Category)
+                .order_by(Category.id)
+            )
         return [category[0] for category in categories]
-
 
     @staticmethod
     @create_session
@@ -59,7 +59,6 @@ class CRUDCategory:
             .where(Category.id == category_id)
         )
         session.commit()
-
 
     @staticmethod
     @create_session
@@ -91,10 +90,3 @@ class CRUDCategory:
             .where(Category.id == category_id)
         )
         return response.all()
-
-
-
-
-
-
-
