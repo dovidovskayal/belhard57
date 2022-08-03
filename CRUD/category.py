@@ -1,18 +1,19 @@
-from typing import Optional, List
+from typing import Optional
 
 from sqlalchemy import select, update, delete
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from models import create_session, Category, Article
+from schemas import CategorySchema, CategoryInDBSchema
 
 
 class CRUDCategory:
 
     @staticmethod
     @create_session
-    def add(name: str, parent_id: int, session: Session = None) -> Optional[Category]:
-        category = Category(name=name, parent_id=parent_id)
+    def add(category: CategorySchema, session: Session = None) -> Optional[CategoryInDBSchema]:
+        category = Category(**category.dict())
         session.add(category)
         try:
             session.commit()
@@ -20,11 +21,11 @@ class CRUDCategory:
             pass
         else:
             session.refresh(category)
-            return category
+            return CategoryInDBSchema(**category.__dict__)
 
     @staticmethod
     @create_session
-    def get(category_id: int, session: Session = None) -> Optional[Category]:
+    def get(category_id: int, session: Session = None) -> Optional[CategoryInDBSchema]:
         category = session.execute(
             select(Category)
             .where(Category.id == category_id)
@@ -32,12 +33,12 @@ class CRUDCategory:
         )
         category = category.first()
         if category:
-            return category[0]
+            return CategoryInDBSchema(**category[0].__dict__)
         # return category[0] if (category := category.first()) else None
 
     @staticmethod
     @create_session
-    def get_all(parent_id: int = None, session: Session = None) -> List[Category]:
+    def get_all(parent_id: int = None, session: Session = None) -> list[CategoryInDBSchema]:
         if parent_id:
             categories = session.execute(
                 select(Category)
@@ -49,7 +50,7 @@ class CRUDCategory:
                 select(Category)
                 .order_by(Category.id)
             )
-        return [category[0] for category in categories]
+        return [CategoryInDBSchema(**category[0].__dict__) for category in categories]
 
     @staticmethod
     @create_session
@@ -63,16 +64,16 @@ class CRUDCategory:
     @staticmethod
     @create_session
     def update(
-            category_id: int,
-            name: str = None,
-            parent_id: int = None,
+            category: CategoryInDBSchema,
             session: Session = None
     ) -> bool:
         session.execute(
             update(Category)
-            .where(Category.id == category_id)
-            .values(name=name if name else Category.name,
-                    parent_id=parent_id if parent_id else Category.parent_id)
+            .where(Category.id == category.id)
+            # .values(name=name if name else Category.name,
+            #        parent_id=parent_id if parent_id else Category.parent_id)
+            # )
+            .values(**category.dict())
         )
         try:
             session.commit()
