@@ -1,4 +1,4 @@
-from CRUD.engine import create_session
+from crud_lite.engine import create_session
 
 class CRUDArticle:
 

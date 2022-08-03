@@ -1,8 +1,5 @@
 import sqlite3
-from CRUD.category import CRUDCategory
-from CRUD.article import CRUDArticle
-from CRUD.user import CRUDUser
-from CRUD.role import CRUDRole
+from crud_lite.category import CRUDCategory
 
 conn = sqlite3.connect("db.db")
 cur = conn.cursor()
