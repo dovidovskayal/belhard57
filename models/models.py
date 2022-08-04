@@ -1,8 +1,7 @@
 from datetime import datetime
 
 from sqlalchemy import Column, SmallInteger, VARCHAR, TIMESTAMP, Boolean, Integer, Text, ForeignKey
-from sqlalchemy.orm import declarative_base, relationship
-
+from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
 
@@ -16,6 +15,7 @@ class User(Base):
     is_blocked = Column(Boolean, default=False)
     email = Column(Text, unique=True)
 
+
 class Category(Base):
     __tablename__: str = 'categories'
 
@@ -23,7 +23,7 @@ class Category(Base):
     name = Column(VARCHAR(24), nullable=False)
     parent_id = Column(SmallInteger, ForeignKey("categories.id", ondelete="CASCADE"))
 
-    #articles = relationship('Article', back_populates = "Category") для связи двух таблиц
+    # articles = relationship('Article', back_populates = "Category") для связи двух таблиц
 
 
 class Article(Base):
@@ -36,14 +36,21 @@ class Article(Base):
     title = Column(VARCHAR(50), nullable=False)
     body = Column(VARCHAR(1024), nullable=False)
     date_create = Column(TIMESTAMP, default=datetime.utcnow())
+    author_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
 
 
-class UserArticle(Base):
-    __tablename__:str = 'user_articles'
+class ArticleComment(Base):
+    __tablename__: str = 'article_comments'
 
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.id', ondelete='NO ACTION'), nullable=False)
-    article_id = Column(Integer, ForeignKey('articles.id', ondelete='CASCADE'), nullable=False)
+    user_id = Column(Integer, ForeignKey('users.id', ondelete="CASCADE"), nullable=False)
+    article_id = Column(Integer, ForeignKey("articles.id", ondelete="CASCADE"), nullable=False)
+    comment = Column(VARCHAR(140), nullable=False)
+    data_created = Column(TIMESTAMP, default=datetime.utcnow())
 
+# class UserArticle(Base):
+#   __tablename__: str = 'user_articles'
 
-
+#  id = Column(Integer, primary_key=True)
+# user_id = Column(Integer, ForeignKey('users.id', ondelete='NO ACTION'), nullable=False)
+# #article_id = Column(Integer, ForeignKey('articles.id', ondelete='CASCADE'), nullable=False)
