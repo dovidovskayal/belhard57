@@ -16,8 +16,8 @@ from schemas import ArticleCommentSchema, ArticleCommentInDBSchema
 # body='erlfme4п23п3пelmlfemnfelmnf',date_create, author_id=2))
 
 
-CRUDArticleComment.add(articlecomment=ArticleCommentSchema(user_id=1, article_id=1, comment='gkvnaelrgvnaelgagqe',
-                                                           date_created=datetime.utcnow()))
+#CRUDArticleComment.add(articlecomment=ArticleCommentSchema(user_id=1, article_id=1, comment='gkvnaelrgvnaelgagqe',
+                                                           #date_created=datetime.utcnow()))
 
 
 print(CRUDArticleComment.get_all())

@@ -46,7 +46,7 @@ class ArticleComment(Base):
     user_id = Column(Integer, ForeignKey('users.id', ondelete="CASCADE"), nullable=False)
     article_id = Column(Integer, ForeignKey("articles.id", ondelete="CASCADE"), nullable=False)
     comment = Column(VARCHAR(140), nullable=False)
-    data_created = Column(TIMESTAMP, default=datetime.utcnow())
+    date_created = Column(TIMESTAMP, default=datetime.utcnow())
 
 # class UserArticle(Base):
 #   __tablename__: str = 'user_articles'
