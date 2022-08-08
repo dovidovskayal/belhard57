@@ -32,17 +32,16 @@ class CRUDUser:
         )
         user = user.first()
         if user:
-            return UserInDBSchema(**user.__dict__)
+            return UserInDBSchema(**user[0].__dict__)
 
 
     @staticmethod
     @create_session
-    def get_all(is_blocked_id: int, session: Session = None) -> list[UserInDBSchema]:
-        if is_blocked_id:
+    def get_all(is_blocked: bool, session: Session = None) -> list[UserInDBSchema]:
+        if is_blocked:
             users = session.execute(
                 select(User)
-                .where(User.is_blocked_id == is_blocked_id)
-                .order_by(User.id)
+                .where(User.is_blocked == is_blocked)
 
             )
         else:

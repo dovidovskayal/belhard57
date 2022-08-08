@@ -1,14 +1,23 @@
-from CRUD import CRUDCategory
-from CRUD import CRUDUser
+from datetime import datetime
+from CRUD import CRUDArticleComment
 
-#category = CRUDCategory.get(category_id=1)
-#print(category)
-#category.name = 'Eда'
-#category.parent_id = None
-#CRUDCategory.update(category=category)
-#print(CRUDCategory.get(category_id=1))
 
-CRUDUser.add(username="Vasya", hashed_password="lsanlda", email='vasya@gmail.com', is_blocked=False)
-CRUDUser.add(username="Gena", hashed_password="lsanldcsa", email='gena@gmail.com', is_blocked=False)
-CRUDUser.add(username="Petya", hashed_password="lda", email='petya@gmail.com', is_blocked=True)
-CRUDUser.add(username="Vanya", hashed_password="lswdqlda", email='vanya@gmail.com', is_blocked=False)
+
+# category = CRUDCategory.get(category_id=1)
+# print(category)
+# category.name = 'Eда'
+# category.parent_id = None
+# CRUDCategory.update(category=category)
+# print(CRUDCategory.get(category_id=1))
+from schemas import ArticleCommentSchema, ArticleCommentInDBSchema
+
+# CRUDArticle.add(article=ArticleSchema(category_id=1, title='обед', body='eкуацпlmlfemnfelmnf',date_create,
+# author_id=1)) CRUDArticle.add(article=ArticleSchema(category_id=1, title='ужин',
+# body='erlfme4п23п3пelmlfemnfelmnf',date_create, author_id=2))
+
+
+CRUDArticleComment.add(articlecomment=ArticleCommentSchema(user_id=1, article_id=1, comment='gkvnaelrgvnaelgagqe',
+                                                           date_created=datetime.utcnow()))
+
+
+print(CRUDArticleComment.get_all())
