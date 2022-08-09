@@ -1,16 +1,22 @@
-import threading
-from time import sleep
+import asyncio
 
 
-def main():
-    for i in range(1,11 ):
+async def foo():
+    for i in range(1,11):
+        print(i)
+        await asyncio.sleep(1)
+
+
+async def main():
+    loop = asyncio.get_running_loop()
+    tasks = [loop.create_task(foo()) for i in range(10)]
+    for task in tasks:
+        await task
+
+
 
 
 
 
 if __name__ == '__main__':
-    threads = []
-    for _ in range(10):
-        threads.append(threading.Thread(target=main))
-    for thread in threads:
-        thread.start()
+   asyncio.run(main())

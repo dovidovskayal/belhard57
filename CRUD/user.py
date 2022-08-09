@@ -1,8 +1,8 @@
 from sqlalchemy import select, update, delete
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from models import create_session, User
+from models import create_async_session, User
 from schemas import UserSchema, UserInDBSchema
 
 
@@ -10,23 +10,23 @@ class CRUDUser:
 
 
     @staticmethod
-    @create_session
-    def add(user: UserSchema, session: Session = None) -> UserInDBSchema | None:
+    @create_async_session
+    async def add(user: UserSchema, session: AsyncSession = None) -> UserInDBSchema | None:
         user = User(**user.dict())
         session.add(user)
         try:
-            session.commit()
+            await session.commit()
         except IntegrityError:
             pass
         else:
-            session.refresh(user)
+            await session.refresh(user)
             return UserInDBSchema(**user.__dict__)
 
 
     @staticmethod
-    @create_session
-    def get(user_id: int, session: Session = None) -> UserInDBSchema | None:
-        user = session.execute(
+    @create_async_session
+    async def get(user_id: int, session: AsyncSession = None) -> UserInDBSchema | None:
+        user = await session.execute(
             select(User)
             .where(User.id == user_id)
         )
@@ -36,16 +36,16 @@ class CRUDUser:
 
 
     @staticmethod
-    @create_session
-    def get_all(is_blocked: bool, session: Session = None) -> list[UserInDBSchema]:
+    @create_async_session
+    async def get_all(is_blocked: bool, session: AsyncSession = None) -> list[UserInDBSchema]:
         if is_blocked:
-            users = session.execute(
+            users = await session.execute(
                 select(User)
                 .where(User.is_blocked == is_blocked)
 
             )
         else:
-            users = session.execute(
+            users = await session.execute(
                 select(User)
                 .order_by(User.id)
             )
@@ -53,27 +53,26 @@ class CRUDUser:
 
 
     @staticmethod
-    @create_session
-    def delete(user_id: int, session: Session = None) -> None:
-        session.execute(
+    @create_async_session
+    async def delete(user_id: int, session: AsyncSession = None) -> None:
+        await session.execute(
             delete(User)
             .where(User.id == user_id)
         )
-        session.commit()
+        await session.commit()
 
 
     @staticmethod
-    @create_session
-    def update(user: UserSchema, session: Session = None) -> bool:
-        session.execute(
+    @create_async_session
+    async def update(user: UserSchema, session: AsyncSession = None) -> bool:
+        await session.execute(
             update(User)
             .where(User.id == user.id)
             .values(**user.dict())
         )
         try:
-            session.commit()
+            await session.commit()
         except IntegrityError:
             return False
         else:
             return True
-

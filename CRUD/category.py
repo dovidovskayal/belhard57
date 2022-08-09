@@ -2,31 +2,31 @@ from typing import Optional
 
 from sqlalchemy import select, update, delete
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from models import create_session, Category, Article
+from models import create_async_session, Category, Article
 from schemas import CategorySchema, CategoryInDBSchema
 
 
 class CRUDCategory:
 
     @staticmethod
-    @create_session
-    def add(category: CategorySchema, session: Session = None) -> Optional[CategoryInDBSchema]:
+    @create_async_session
+    async def add(category: CategorySchema, session: AsyncSession = None) -> Optional[CategoryInDBSchema]:
         category = Category(**category.dict())
         session.add(category)
         try:
-            session.commit()
+            await session.commit()
         except IntegrityError:
             pass
         else:
-            session.refresh(category)
+            await session.refresh(category)
             return CategoryInDBSchema(**category.__dict__)
 
     @staticmethod
-    @create_session
-    def get(category_id: int, session: Session = None) -> Optional[CategoryInDBSchema]:
-        category = session.execute(
+    @create_async_session
+    async def get(category_id: int, session: AsyncSession = None) -> Optional[CategoryInDBSchema]:
+        category = await session.execute(
             select(Category)
             .where(Category.id == category_id)
             # .where(or_(Category.id == category_id, Category.name == 'Food')) для объединения через и/или
@@ -37,37 +37,37 @@ class CRUDCategory:
         # return category[0] if (category := category.first()) else None
 
     @staticmethod
-    @create_session
-    def get_all(parent_id: int = None, session: Session = None) -> list[CategoryInDBSchema]:
+    @create_async_session
+    async def get_all(parent_id: int = None, session: AsyncSession = None) -> list[CategoryInDBSchema]:
         if parent_id:
-            categories = session.execute(
+            categories = await session.execute(
                 select(Category)
                 .where(Category.parent_id == parent_id)
                 .order_by(Category.id)
             )
         else:
-            categories = session.execute(
+            categories = await session.execute(
                 select(Category)
                 .order_by(Category.id)
             )
         return [CategoryInDBSchema(**category[0].__dict__) for category in categories]
 
     @staticmethod
-    @create_session
-    def delete(category_id: int, session: Session = None) -> None:
-        session.execute(
+    @create_async_session
+    async def delete(category_id: int, session: AsyncSession = None) -> None:
+        await session.execute(
             delete(Category)
             .where(Category.id == category_id)
         )
-        session.commit()
+        await session.commit()
 
     @staticmethod
-    @create_session
-    def update(
+    @create_async_session
+    async def update(
             category: CategoryInDBSchema,
-            session: Session = None
+            session: AsyncSession = None
     ) -> bool:
-        session.execute(
+        await session.execute(
             update(Category)
             .where(Category.id == category.id)
             # .values(name=name if name else Category.name,
@@ -76,18 +76,19 @@ class CRUDCategory:
             .values(**category.dict())
         )
         try:
-            session.commit()
+            await session.commit()
         except IntegrityError:
             return False
         else:
             return True
 
     @staticmethod
-    @create_session
-    def get_articles(category_id: int, session: Session = None) -> list[tuple[Category, Article]]:
-        response = session.execute(
+    @create_async_session
+    async def get_articles(category_id: int, session: AsyncSession = None) -> list[tuple[Category, Article]]:
+        response = await session.execute(
             select(Category, Article)
             .join(Article, Category.id == Article.category_id)
             .where(Category.id == category_id)
         )
         return response.all()
+
