@@ -28,7 +28,7 @@ def get_response():
     with Session() as session:
         response = session.get(
             url="https://d474-80-93-191-82.eu.ngrok.io/api/1/article/get",
-            params={'article_id': 26}
+            params={'article_id': 39}
         )
         print(response.status_code)
         print(response.json())
@@ -53,7 +53,7 @@ def get_all_response():
 
 
 # put_response()
-# get_response()
+get_response()
 get_all_response()
 
 # import asyncio
