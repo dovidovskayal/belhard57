@@ -5,43 +5,43 @@ from CRUD import CRUDArticle
 
 # from schemas import ArticleSchema
 
+class ArticalsAPI:
+    def put_response():
+        list_article = CRUDArticle.get_all()
+        for i in range(0, len(list_article)):
+            json = dict(list_article[i])
+            with Session() as session:
+                response = session.put(
+                    url="https://d474-80-93-191-82.eu.ngrok.io/api/1/article/add",
+                    json=json
+                )
+        print(response.json())
+        print(response.status_code)
 
-def put_response():
-    list_article = CRUDArticle.get_all()
-    for i in range(0, len(list_article)):
-        json = dict(list_article[i])
+
+    def get_response():
         with Session() as session:
-            response = session.put(
-                url="https://d474-80-93-191-82.eu.ngrok.io/api/1/article/add",
-                json=json
+            response = session.get(
+                url="https://d474-80-93-191-82.eu.ngrok.io/api/1/article/get",
+                params={'article_id': 26}
             )
-    print(response.json())
-    print(response.status_code)
+            print(response.status_code)
+            print(response.json())
 
 
-def get_response():
-    with Session() as session:
-        response = session.get(
-            url="https://d474-80-93-191-82.eu.ngrok.io/api/1/article/get",
-            params={'article_id': 26}
-        )
-        print(response.status_code)
-        print(response.json())
+    def get_all_response():
+        with Session() as session:
+            response = session.get(
+                url="https://d474-80-93-191-82.eu.ngrok.io/api/1/article/all",
+                # params={'category_id': 1}
+            )
+            print(response.status_code)
+            print(response.json())
 
 
-def get_all_response():
-    with Session() as session:
-        response = session.get(
-            url="https://d474-80-93-191-82.eu.ngrok.io/api/1/article/all",
-            # params={'category_id': 1}
-        )
-        print(response.status_code)
-        print(response.json())
-
-
-put_response()
-get_response()
-get_all_response()
+ArticalsAPI.put_response()
+ArticalsAPI.get_response()
+ArticalsAPI.get_all_response()
 
 # import asyncio
 # from aiohttp import ClientSession
