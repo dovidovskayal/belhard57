@@ -35,8 +35,9 @@ class Article(Base):
                          nullable=False)
     title = Column(VARCHAR(50), nullable=False)
     body = Column(VARCHAR(1024), nullable=False)
-    date_create = Column(TIMESTAMP, default=datetime.utcnow())
-    author_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    #date_create = Column(TIMESTAMP, default=datetime.utcnow())
+    # user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    user_id = Column(Integer, nullable=False)
 
 
 class ArticleComment(Base):

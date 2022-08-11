@@ -1,7 +1,7 @@
 import sqlite3
 from crud_lite.category import CRUDCategory
 
-conn = sqlite3.connect("db.db")
+conn = sqlite3.connect("../db.db")
 cur = conn.cursor()
 cur.execute("""
     CREATE TABLE IF NOT EXISTS categories(
